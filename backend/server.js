@@ -1,6 +1,7 @@
 import express from "express"
 import dotenv from "dotenv"
 import authRoutes from "./routes/auth.routes.js";
+import userRoutes from "./routes/user.routes.js";
 import connectToMongoDb from "./db/connectToMongoDb.js";
 import messageRoutes from "./routes/message.routes.js";
 import cookieParser from "cookie-parser";
@@ -16,6 +17,7 @@ app.use(cookieParser()); //middleware to parse cookies
 
 app.use("/api/auth",authRoutes);
 app.use("/api/messages",messageRoutes);
+app.use("/api/users",userRoutes);
 
 
 
