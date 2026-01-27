@@ -1,13 +1,35 @@
 import GenderCheckbox from './GenderCheckbox.jsx';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import useSignup from '../../hooks/useSignup.js';
 
 const Signup = () => {
+
+  const [inputs, setInputs] = useState({
+    fullName: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+    gender: ''
+  });
+  const {signup,loading}=useSignup();
+
+  const handleCheckboxChange = (gender) => {
+setInputs((prev) => ({ ...prev, gender }));
+};
+
+  const handleSubmit = async(e) => {
+    
+    e.preventDefault(); 
+    await signup(inputs);
+  }
   return (
     <div className='flex flex-col items-center justify-center min-w-96 mx-auto '>
       <div className='w-full p-6 rounded-lg shadow-md bg-white/10 bg-clip-padding  backdrop-blur-lg bg-opacity-10'>
 				<h1 className='text-3xl font-semibold text-center text-gray-300'>
 					Sign Up <span className='text-blue-500'> ChatApp</span>
 				</h1>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div>
             <label className='label p-2'>
               <span className='text-base label-text text-gray-200'>Fullname</span>
@@ -16,6 +38,8 @@ const Signup = () => {
 							type='text'
 							placeholder='John Doe'
 							className='w-full input input-bordered  h-10'
+              value={inputs.fullName}
+              onChange={(e) => setInputs({...inputs, fullName: e.target.value})}
 							
 							
 						/>
@@ -29,6 +53,8 @@ const Signup = () => {
 							type='text'
 							placeholder='johndoe'
 							className='w-full input input-bordered  h-10'
+              value={inputs.username}
+              onChange={(e) => setInputs({...inputs, username: e.target.value})}
 							
 							
 						/>
@@ -42,6 +68,8 @@ const Signup = () => {
               type='text' 
               placeholder='Enter Password' 
               className='w-full input input-bordered h-10'
+              value={inputs.password}
+              onChange={(e) => setInputs({...inputs, password: e.target.value})}
               
             />
           </div>
@@ -53,12 +81,14 @@ const Signup = () => {
               type='text' 
               placeholder='confirm Password' 
               className='w-full input input-bordered h-10'
+              value={inputs.confirmPassword}
+              onChange={(e) => setInputs({...inputs, confirmPassword: e.target.value})}
               
             />
           
           </div>
-           <a href="#" className="text-sm  hover:text-blue-500 hover:underline mt-2 inline-block">Already have an account?</a>
-    <GenderCheckbox/>
+           <Link to="/login" className="text-sm  hover:text-blue-500 hover:underline mt-2 inline-block">Already have an account?</Link>
+    <GenderCheckbox onCheckboxChange={handleCheckboxChange} selectedGender={inputs.gender}/>
 
           <div>
             <button className='btn btn-block btn-sm mt-2' >Sign Up
