@@ -18,9 +18,7 @@ setLoading(true);
                 body:JSON.stringify({fullName,username,password,confirmPassword,gender}),
             });
             const data=await res.json();
-            if(data.error){
-                throw new Error(data.error);
-            }
+            
             if(!res.ok){
                 throw new Error(data.message || 'Something went wrong');
             }

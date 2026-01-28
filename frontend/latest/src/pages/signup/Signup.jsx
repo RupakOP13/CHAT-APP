@@ -19,8 +19,11 @@ setInputs((prev) => ({ ...prev, gender }));
 };
 
   const handleSubmit = async(e) => {
+
+
     
     e.preventDefault(); 
+    if(loading) return;
     await signup(inputs);
   }
   return (
@@ -91,9 +94,14 @@ setInputs((prev) => ({ ...prev, gender }));
     <GenderCheckbox onCheckboxChange={handleCheckboxChange} selectedGender={inputs.gender}/>
 
           <div>
-            <button className='btn btn-block btn-sm mt-2' >Sign Up
-            </button>
-          </div>
+  {!loading ? (
+    <button type="submit" className="btn btn-block btn-sm mt-2">
+      Sign Up
+    </button>
+  ) : (
+    <span className="loading loading-spinner"></span>
+  )}
+</div>
 
         </form>
         
