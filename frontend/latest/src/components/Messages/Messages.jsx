@@ -5,16 +5,23 @@ import MessageSkeleton from "../skeletons/MessageSkeleton.jsx";
 
 function Messages() {
 	const { messages, loading } = useGetMessages();
-	
+	const lastMessageRef = useRef(null);
 
-	
+	useEffect(() => {
+		if (lastMessageRef.current) {
+			lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+		}
+	}, [ messages ]);
 
 	
 
 	return (
 		<div className='px-4 flex-1 overflow-auto'>
 
-			{!loading && messages.length > 0 && messages.map((msg) => <Message key={msg._id} message={msg} />)}
+			{!loading && messages.length > 0 && messages.map((msg) =>
+			<div key={msg.id} ref={lastMessageRef}>
+				 <Message message={msg} />
+				 </div>)}
 			{loading && [...Array(3)].map((_, idx) => <MessageSkeleton key={idx} />)}
 
 			{!loading && messages.length === 0 && (
