@@ -42,8 +42,8 @@ export const signup=async(req,res)=>{
         res.status(400).json({message:"Error creating user"});
 
     }}catch(err){
-        console.log(err.message);
-        res.status(500).send("Server Error")
+        console.log("Error in signup controller:", err.message);
+        res.status(500).json({error: "Internal Server Error"})
     }
 
 };
@@ -64,8 +64,8 @@ export const login=async(req,res)=>{
         profilePic:user.profilePic,
     });
     }catch(err){
-        console.log(err.message);
-        res.status(500).send("Server Error")
+        console.log("Error in login controller:", err.message);
+        res.status(500).json({error: "Internal Server Error"})
     }
     
     
@@ -78,8 +78,8 @@ export const  logout=async(req,res)=>{
 
     }
     catch(err){
-        console.log(err.message);
-        res.status(500).send("Server Error")
+        console.log("Error in logout controller:", err.message);
+        res.status(500).json({error: "Internal Server Error"})
     }
     
 

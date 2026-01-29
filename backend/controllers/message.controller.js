@@ -34,8 +34,8 @@ export const sendMessage=async(req,res)=>{
 }
 
     catch(err){
-        console.log(err.message);
-        res.status(500).send("Server Error")
+        console.log("Error in sendMessage controller:", err.message);
+        res.status(500).json({error: "Internal Server Error"})
     }
 };
 
@@ -49,7 +49,7 @@ export const getMessages=async(req,res)=>{
         res.status(200).json({messages:conversation?.messages || []});
 
     }catch(err){
-        console.log(err.message);
-        res.status(500).send("Server Error")
+        console.log("Error in getMessages controller:", err.message);
+        res.status(500).json({error: "Internal Server Error"})
     }
 };

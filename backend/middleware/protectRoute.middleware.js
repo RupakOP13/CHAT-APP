@@ -21,8 +21,8 @@ req.user=user;
 next();
     }
     catch(err){
-        console.log(err.message);
-        res.status(500).send("Server Error")
+        console.log("Error in protectRoute middleware:", err.message);
+        res.status(500).json({error: "Internal Server Error"})
     }
 };
 export default protectRoute;
