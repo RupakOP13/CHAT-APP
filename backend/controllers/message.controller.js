@@ -1,6 +1,7 @@
 
 import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 
 
 
@@ -29,6 +30,14 @@ export const sendMessage=async(req,res)=>{
         conversation.messages.push(newMessage._id);
     }
     await conversation.save();
+
+    // SOCKET IO FUNCTIONALITY - send to receiver in real time
+    const receiverSocketId=getReceiverSocketId(receiverId);
+    if(receiverSocketId){
+        //io.to(socketId).emit()  // use to send event to specific client
+        io.to(receiverSocketId).emit("newMessage",newMessage);
+    }
+
     res.status(201).json({message:"Message sent successfully", newMessage});
 
 }
