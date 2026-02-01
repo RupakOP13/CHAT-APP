@@ -68,3 +68,25 @@ body {
 		transform: translate3d(4px, 0, 0);
 	}
 }
+
+/* Online indicator for avatar */
+.avatar {
+	position: relative;
+}
+
+.avatar.online::before {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 1rem;
+	height: 1rem;
+	border-radius: 50%;
+	background-color: #22c55e;
+	border: 2px solid #1f2937;
+	z-index: 10;
+}
+
+.avatar.offline::before {
+	display: none;
+}

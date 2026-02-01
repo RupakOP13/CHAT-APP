@@ -21,21 +21,27 @@ export const sendMessage=async(req,res)=>{
             
         });
      }
-     const newMessage=await Message.create({
+     const newMessage=new Message({
         senderId,
         receiverId,
         message,
      });
+     
     if(newMessage){
         conversation.messages.push(newMessage._id);
     }
-    await conversation.save();
+    
+    // Save both in parallel for better performance
+    await Promise.all([conversation.save(), newMessage.save()]);
 
     // SOCKET IO FUNCTIONALITY - send to receiver in real time
     const receiverSocketId=getReceiverSocketId(receiverId);
+    console.log(`Sending message to receiver ${receiverId}, socket: ${receiverSocketId}`);
+    
     if(receiverSocketId){
         //io.to(socketId).emit()  // use to send event to specific client
         io.to(receiverSocketId).emit("newMessage",newMessage);
+        console.log("Message emitted to receiver");
     }
 
     res.status(201).json({message:"Message sent successfully", newMessage});

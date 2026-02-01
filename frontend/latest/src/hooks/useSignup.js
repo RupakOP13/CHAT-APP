@@ -19,7 +19,7 @@ setLoading(true);
             });
             const data=await res.json();
             
-            if(!res.ok){
+            if(!res.ok){    // means response status is not in 200-299
                 throw new Error(data.message || 'Something went wrong');
             }
             toast.success('Account created successfully');

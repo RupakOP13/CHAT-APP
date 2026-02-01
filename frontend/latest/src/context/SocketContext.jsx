@@ -24,21 +24,20 @@ export const SocketContextProvider=({children})=>{
             
             setSocket(newSocket);
             
-            newSocket?.on("onlineUsers",(users)=>{
+            newSocket.on("getOnlineUsers",(users)=>{
+                console.log("Online users updated:", users);
                 setOnlineUsers(users);
             });
+            
             return()=>{
-                newSocket.disconnect();
+                newSocket.close();
             }
   
-            }   else{
+        } else{
             if(socket){
-                socket.disconnect();
+                socket.close();
                 setSocket(null);
             }
-
-
-            
         }
     },[authUser]);
     return<SocketContext.Provider value={{socket,onlineUsers}}>
